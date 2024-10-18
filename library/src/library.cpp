@@ -74,7 +74,12 @@ static int rawValue(lua_State *LUA) {
     return 0;
 }
 
-extern "C" int __declspec(dllexport) luaopen_swisscheese(lua_State *L) {
+#ifdef _WIN32
+#define EXPORT_SYMBOL __declspec(dllexport)
+#else
+#define EXPORT_SYMBOL __attribute__((visibility("default")))
+#endif
+extern "C" EXPORT_SYMBOL int luaopen_swisscheese(lua_State *L) {
     dllStart();
 
     static const luaL_Reg luaBridgeCalls[] = {
